@@ -1,5 +1,4 @@
-[03/06/2026 06:27] Tatiana Msr: print("Mon bot Telegram")
-[03/06/2026 06:31] Tatiana Msr: from telegram import Update
+from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 import os
 
