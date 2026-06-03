@@ -2,7 +2,7 @@ import os
 import requests
 from flask import Flask, request
 
-app = Flask(name)
+app = Flask(__name__)
 
 TOKEN = os.getenv("BOT_TOKEN")
 URL = f"https://api.telegram.org/bot{TOKEN}"
@@ -15,7 +15,7 @@ def home():
 def webhook():
     data = request.get_json()
 
-    if "message" in data:
+    if data and "message" in data:
         chat_id = data["message"]["chat"]["id"]
         text = data["message"].get("text", "")
 
