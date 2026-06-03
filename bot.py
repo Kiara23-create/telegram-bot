@@ -9,26 +9,23 @@ URL = f"https://api.telegram.org/bot{TOKEN}"
 
 @app.route("/", methods=["GET"])
 def home():
-    return "Bot is running"
+    return "Bot OK"
 
-@app.route(f"/{TOKEN}", methods=["POST"])
+@app.route("/webhook", methods=["POST"])
 def webhook():
     data = request.get_json()
 
-    if data and "message" in data:
+    if "message" in data:
         chat_id = data["message"]["chat"]["id"]
         text = data["message"].get("text", "")
 
         if text == "/start":
-            send_message(chat_id, "Bonjour ! Le bot fonctionne 🚀")
+            requests.post(f"{URL}/sendMessage", json={
+                "chat_id": chat_id,
+                "text": "Bonjour ! Le bot fonctionne 🚀"
+            })
 
     return "ok"
-
-def send_message(chat_id, text):
-    requests.post(f"{URL}/sendMessage", json={
-        "chat_id": chat_id,
-        "text": text
-    })
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
